@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slideshow Demo</title>
+
+    <link rel="stylesheet" href="./style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="slideshow">
+            <button id="prev" class="btn btn-prev" title="Previous Slide" aria-label="Previous Slide"><i
+                    class="fa-solid fa-chevron-left"></i></button>
+            <button id="next" class="btn btn-next" title="Next Slide" aria-label="Next Slide"><i
+                    class="fa-solid fa-chevron-right"></i></button>
+            <div class="slide-container">
+                <div class="track">
+                    <div class="slide-item">
+                        <img src="./img/img1.jpeg" alt="" />
+                    </div>
+                    <div class="slide-item">
+                        <img src="./img/img2.jpeg" alt="" />
+                    </div>
+                    <div class="slide-item">
+                        <img src="./img/img3.jpeg" alt="" />
+                    </div>
+                    <div class="slide-item">
+                        <img src="./img/img4.jpeg" alt="" />
+                    </div>
+                    <div class="slide-item">
+                        <img src="./img/img5.jpeg" alt="" />
+                    </div>
+                    <div class="slide-item">
+                        <img src="./img/img6.jpeg" alt="" />
+                    </div>
+                    <div class="slide-item">
+                        <img src="./img/img7.jpeg" alt="" />
+                    </div>
+                    <div class="slide-item">
+                        <img src="./img/img8.jpeg" alt="" />
+                    </div>
+                    <div class="slide-item">
+                        <img src="./img/img9.jpeg" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="slides-pagination">
+            <ul class="slides-list">
+                <li class="slides-pagination-item">
+                    <img src="./img/img1.jpeg" alt="" />
+                </li>
+                <li class="slides-pagination-item">
+                    <img src="./img/img2.jpeg" alt="" />
+                </li>
+                <li class="slides-pagination-item">
+                    <img src="./img/img3.jpeg" alt="" />
+                </li>
+                <li class="slides-pagination-item">
+                    <img src="./img/img4.jpeg" alt="" />
+                </li>
+                <li class="slides-pagination-item"><img src="./img/img5.jpeg" alt="" /></li>
+                <li class="slides-pagination-item"><img src="./img/img6.jpeg" alt="" /></li>
+                <li class="slides-pagination-item"><img src="./img/img7.jpeg" alt="" /></li>
+                <li class="slides-pagination-item"><img src="./img/img8.jpeg" alt="" /></li>
+                <li class="slides-pagination-item"><img src="./img/img9.jpeg" alt="" /></li>
+            </ul>
+        </div>
+    </div>
+    <script src="./slideshow.js"></script>
+</body>
+
+</html>
