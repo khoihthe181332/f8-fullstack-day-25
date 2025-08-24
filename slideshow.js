@@ -2,6 +2,7 @@ const prevBtn = document.querySelector("#prev");
 const nextBtn = document.querySelector("#next");
 const slides = Array.from(document.querySelectorAll(".slide-item"));
 const track = document.querySelector(".track");
+const pages = document.querySelectorAll(".slide-page");
 
 // Khởi tạo
 const NEXT = 1;
@@ -9,7 +10,7 @@ const PREV = -1;
 
 let currentIndex = 1;
 let acpControl = true; // biến cho phép ấn next/prev
-const lengthOfSlides = slides.length; // độ dài của mảng
+const lengthOfSlides = slides.length; // độ dài của mảng = 6
 
 // Clone slide đầu và cuối
 const firstSlide = slides[0].cloneNode(true);
@@ -23,15 +24,36 @@ slides.unshift(lastSlide);
 track.append(firstSlide);
 track.prepend(lastSlide);
 
-// img:   (5) 1 2 3 4 (1)
-// index:  0  1 2 3 4  5  
-// length = 6 -> length thực tế là 4
+// slide:      (5)  1 2 3 4 5 6  (1)
+// indexSlide:  0   1 2 3 4 5 6   7   -> currentIndex
+// indexPage:  (5)  0 1 2 3 4 5  (0)   
+// length = 8 -> length thực tế là 6
 
-// Gọi hàm từ đầu để khi reload ảnh hiển thị đảm bảo luôn là ảnh số 1 
+// Gọi hàm từ đầu để khi reload ảnh hiển thị đảm bảo luôn là ảnh số 1
 setPosition(true);
+
+// Thêm class và page đầu tiên
+updateClassActive(0);
+
+// Hàm thêm class active vào page
+function updateClassActive(index) {
+    pages[index].classList.add("active");
+};
 
 function setNewIndex(step) {
     currentIndex = (currentIndex + step + slides.length) % slides.length;
+
+    pages.forEach((page) => {
+        if (page.classList.contains("active")) page.classList.remove("active");
+    });
+
+    if (currentIndex === 0) {
+        updateClassActive(lengthOfSlides - 1); // Active page cuối cùng
+    } else if (currentIndex === slides.length - 1) {
+        updateClassActive(0); // Active page đầu tiên
+    } else {
+        updateClassActive(currentIndex - 1);
+    };
 
     // Hết hiệu ứng trượt thì sẽ nhảy về ảnh đầu tiên
     track.addEventListener("transitionend", () => {
@@ -51,7 +73,7 @@ function setNewIndex(step) {
 };
 
 function setPosition(instant = false) {
-    // Khi transition đang có thì sẽ k cho bấm nút 
+    // Khi transition đang có thì sẽ k cho bấm nút
     if (!instant) {
         acpControl = false;
     }
@@ -71,38 +93,42 @@ nextBtn.addEventListener("click", (e) => {
 
 // Hàm để slide tự động chạy
 let autoPlay;
-function slideAutoPlay() {
+
+function startAutoPlay() {
     autoPlay = setInterval(() => {
         setNewIndex(NEXT);
     }, 5000) // 5000ms = 5s
 };
 
-slideAutoPlay();
+function stopAutoPlay() {
+    clearInterval(autoPlay);
+};
+
+function resetAutoPlay() {
+    stopAutoPlay();
+    startAutoPlay();
+};
+
+startAutoPlay();
 
 // Khi di chuột vào thì slide sẽ dừng lại => giống  animation-play-state: paused
 track.addEventListener("mouseenter", (e) => {
-    clearTimeout(autoPlay);
+    stopAutoPlay();
 });
 
 // Khi bỏ chuột ra slide lại tiếp tục chạy
 track.addEventListener("mouseleave", (e) => {
-    slideAutoPlay();
+    startAutoPlay();
 });
 
 // Chọn slide trong pagination
-const paginationItems = document.querySelectorAll(".slides-pagination-item");
-
-// img:   (5) 1 2 3 4 (1)
-// index:  0  1 2 3 4  5  
-// length = 6 -> length thực tế là 4
-
-// Lặp và lấy từng phần tử trong paginationItems
-paginationItems.forEach((item, index) => {
-    item.addEventListener("click", () => {
-        currentIndex = index + 1;
-        setPosition();
+pages.forEach((page, index) => {
+    page.addEventListener("click", () => {
+        // Tính bước nhảy từ vị trí hiện tại đến vị trí click
+        const step = index + 1 - currentIndex;
+        setNewIndex(step);
+        resetAutoPlay();
     });
 });
-
 
 
