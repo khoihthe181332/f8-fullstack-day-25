@@ -1,6 +1,6 @@
 const prevBtn = document.querySelector("#prev");
 const nextBtn = document.querySelector("#next");
-const slides = Array.from(document.querySelectorAll(".slide-item"));
+const slides = Array.from(document.querySelectorAll(".slide-item")); // = 8 (tính cả 2 node được clone ở đầu và cuối)
 const track = document.querySelector(".track");
 const pages = document.querySelectorAll(".slide-page");
 
@@ -10,7 +10,7 @@ const PREV = -1;
 
 let currentIndex = 1;
 let acpControl = true; // biến cho phép ấn next/prev
-const lengthOfSlides = slides.length; // độ dài của mảng = 6
+const originalLengthOfSlides = slides.length; // độ dài gốc của mảng = 6
 
 // Clone slide đầu và cuối
 const firstSlide = slides[0].cloneNode(true);
@@ -48,7 +48,7 @@ function setNewIndex(step) {
     });
 
     if (currentIndex === 0) {
-        updateClassActive(lengthOfSlides - 1); // Active page cuối cùng
+        updateClassActive(originalLengthOfSlides - 1); // Active page cuối cùng
     } else if (currentIndex === slides.length - 1) {
         updateClassActive(0); // Active page đầu tiên
     } else {
@@ -57,11 +57,11 @@ function setNewIndex(step) {
 
     // Hết hiệu ứng trượt thì sẽ nhảy về ảnh đầu tiên
     track.addEventListener("transitionend", () => {
-        if (currentIndex > lengthOfSlides) {
-            currentIndex -= lengthOfSlides;
+        if (currentIndex > originalLengthOfSlides) {
+            currentIndex -= originalLengthOfSlides;
             setPosition(true);
         } else if (currentIndex === 0) {
-            currentIndex = lengthOfSlides;
+            currentIndex = originalLengthOfSlides;
             setPosition(true);
         }
 
@@ -77,7 +77,7 @@ function setPosition(instant = false) {
     if (!instant) {
         acpControl = false;
     }
-    track.style.transition = instant ? "none" : "ease 0.5s";
+    track.style.transition = instant ? "none" : "ease 0.7s";
     track.style.translate = `${currentIndex * 100 * -1}%`;
 }
 
@@ -121,6 +121,11 @@ track.addEventListener("mouseleave", (e) => {
     startAutoPlay();
 });
 
+// slide:      (5)  1 2 3 4 5 6  (1)
+// indexSlide:  0   1 2 3 4 5 6   7   -> currentIndex
+// indexPage:  (5)  0 1 2 3 4 5  (0)
+// length = 8 -> length thực tế là 6
+
 // Chọn slide trong pagination
 pages.forEach((page, index) => {
     page.addEventListener("click", () => {
@@ -130,5 +135,3 @@ pages.forEach((page, index) => {
         resetAutoPlay();
     });
 });
-
-

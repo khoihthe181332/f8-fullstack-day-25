@@ -102,7 +102,7 @@ button {
 
 .slide-content-right {
     display: flex;
-    flex-grow: 3;
+    flex-grow: 1;
     justify-content: flex-end;
     overflow: hidden;
 }
@@ -171,28 +171,36 @@ button {
 /* Button */
 .btn {
     background-color: #fff;
-    font-size: 2rem;
+    font-size: 1.4rem;
     font-weight: 600;
-    width: 42px;
-    height: 42px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     filter: drop-shadow(2px 2px 20px rgb(0, 0, 0));
     color: #6a6a6a;
     cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     position: absolute;
     top: 50%;
     z-index: 10;
 }
 
+.btn:hover {
+    color: #000;
+}
+
 .btn-next {
     right: 0;
-    transform: translate(50%, -50%);
+    transform: translate(55%, -50%);
 }
 
 .btn-prev {
     left: 0;
-    transform: translate(-50%, -50%);
+    transform: translate(-55%, -50%);
 }
 
 /* Pagination */
@@ -218,4 +226,33 @@ button {
 .slide-page.active {
     width: 50px;
     background-color: #9aa6af;
+}
+
+
+@media (max-width: 575.98px) {
+    .slide-content-left .title {
+        font-size: 2.2rem;
+    }
+
+    .slide-content-left .desc {
+        font-size: 1.4rem;
+        margin-bottom: 18px;
+    }
+
+    .slide-content-left .register {
+        font-size: 1.2rem;
+    }
+
+    .slide-item {
+        max-height: 230px;
+        padding: 20px 0;
+    }
+
+    .slide-page {
+        width: 16px;
+    }
+
+    .slide-page.active {
+        width: 26px;
+    }
 }
