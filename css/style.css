@@ -255,4 +255,8 @@ button {
     .slide-page.active {
         width: 26px;
     }
+
+    .btn {
+        display: none;
+    }
 }

@@ -5,6 +5,7 @@ const track = document.querySelector(".track");
 const pages = document.querySelectorAll(".slide-page");
 
 // Khởi tạo
+let isTouching = false;
 const NEXT = 1;
 const PREV = -1;
 
@@ -109,17 +110,17 @@ function resetAutoPlay() {
     startAutoPlay();
 };
 
-startAutoPlay();
+// startAutoPlay();
 
-// Khi di chuột vào thì slide sẽ dừng lại => giống  animation-play-state: paused
-track.addEventListener("mouseenter", (e) => {
-    stopAutoPlay();
-});
+// // Khi di chuột vào thì slide sẽ dừng lại => giống  animation-play-state: paused
+// track.addEventListener("mouseenter", (e) => {
+//     stopAutoPlay();
+// });
 
-// Khi bỏ chuột ra slide lại tiếp tục chạy
-track.addEventListener("mouseleave", (e) => {
-    startAutoPlay();
-});
+// // Khi bỏ chuột ra slide lại tiếp tục chạy
+// track.addEventListener("mouseleave", (e) => {
+//     startAutoPlay();
+// });
 
 // slide:      (5)  1 2 3 4 5 6  (1)
 // indexSlide:  0   1 2 3 4 5 6   7   -> currentIndex
@@ -135,3 +136,39 @@ pages.forEach((page, index) => {
         resetAutoPlay();
     });
 });
+
+
+// Responsive - dùng tay trượt slide
+let touchCoord = 0;
+let moveCoord = 0;
+
+function handleTouchStart(e) {
+    e.preventDefault();
+    isTouching = true;
+    touchCoord = e.touches[0].clientX;
+}
+
+function handleTouchMove(e) {
+    if (isTouching) {
+        moveCoord = e.touches[0].clientX
+    }
+}
+
+function handleTouchEnd(e) {
+    e.preventDefault();
+    if (!isTouching) return;
+    isTouching = false;
+    const distance = moveCoord - touchCoord;
+
+    if (distance > 50) { // Kéo khoảng cách tăng thì vuốt về slide trước
+        setNewIndex(PREV);
+    } else if (distance < -50) { // Kéo khoảng cách giảm thì vuốt về slide sau
+        setNewIndex(NEXT);
+    }
+}
+
+track.addEventListener("touchstart", handleTouchStart);
+
+track.addEventListener("touchmove", handleTouchMove);
+
+track.addEventListener("touchend", handleTouchEnd);
