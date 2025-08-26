@@ -110,17 +110,17 @@ function resetAutoPlay() {
     startAutoPlay();
 };
 
-// startAutoPlay();
+startAutoPlay();
 
-// // Khi di chuột vào thì slide sẽ dừng lại => giống  animation-play-state: paused
-// track.addEventListener("mouseenter", (e) => {
-//     stopAutoPlay();
-// });
+// Khi di chuột vào thì slide sẽ dừng lại => giống  animation-play-state: paused
+track.addEventListener("mouseenter", (e) => {
+    stopAutoPlay();
+});
 
-// // Khi bỏ chuột ra slide lại tiếp tục chạy
-// track.addEventListener("mouseleave", (e) => {
-//     startAutoPlay();
-// });
+// Khi bỏ chuột ra slide lại tiếp tục chạy
+track.addEventListener("mouseleave", (e) => {
+    startAutoPlay();
+});
 
 // slide:      (5)  1 2 3 4 5 6  (1)
 // indexSlide:  0   1 2 3 4 5 6   7   -> currentIndex
@@ -162,8 +162,10 @@ function handleTouchEnd(e) {
 
     if (distance > 50) { // Kéo khoảng cách tăng thì vuốt về slide trước
         setNewIndex(PREV);
+        resetAutoPlay();
     } else if (distance < -50) { // Kéo khoảng cách giảm thì vuốt về slide sau
         setNewIndex(NEXT);
+        resetAutoPlay();
     }
 }
 
